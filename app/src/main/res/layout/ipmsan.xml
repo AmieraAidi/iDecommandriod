@@ -148,16 +148,16 @@
             android:gravity="center">
 
             <Button
-                android:layout_marginLeft="10dp"
-                android:background="#800000"
-                android:textColor="#ffffff"
                 android:id="@+id/inprogress"
-                android:textSize="35dp"
-                android:text="HELLO"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:background="#800000"
+                android:gravity="center"
+                android:text="yes sir"
+                android:textColor="#ffffff"
+                android:textSize="35dp" />
 
             <Button
                 android:layout_marginLeft="10dp"
