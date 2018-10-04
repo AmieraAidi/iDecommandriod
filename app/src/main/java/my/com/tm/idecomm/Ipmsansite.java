@@ -109,7 +109,7 @@ public class Ipmsansite extends AppCompatActivity implements View.OnClickListene
                             totalBlock = response.getString("totalcab_block");
 //                            approve = response.getString("totalApproved");
 //                            dismantle = response.getString("totalCabApproved");
-//                            plinth = response.getString("totalPlinthRecovered");
+//                            plinth = response.getString("totalPlinthReco
 //
 //                            completeDecomm.setText(completed);
                             totalcabinet.setText(total);
