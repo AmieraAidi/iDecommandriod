@@ -108,7 +108,7 @@
                 android:layout_weight="1"
                 android:background="#800000"
                 android:gravity="center"
-                android:text="HELLO h"
+                android:text="HELLO h 2"
                 android:textColor="#ffffff"
                 android:textSize="35dp" />
         </LinearLayout>
