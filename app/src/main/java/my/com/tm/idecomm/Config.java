@@ -102,8 +102,8 @@ public class Config {
 
     //IPMSAN SITES
     public static final String URL_IPMSAN="http://58.27.84.166/mcconline/MCC%20Online%20V3/decom/totalcab.php";
-    //public static final String URL_IPMSANBlock="http://58.27.84.166/mcconline/MCC%20Online%20V3/decom/totalcab_block.php";
-
+    public static final String URL_IPMSANBlocklist="http://58.27.84.166/mcconline/MCC%20Online%20V3/decom/totalcablist_blocked.php";
+    public static final String URL_IPMSANBlocklist_perstate = "http://58.27.84.166/mcconline/MCC%20Online%20V3/decom/totalcablist_blocked_perstate.php";
     //payment outstanding
     public static final String URL_OUTSTANDING= "http://58.27.84.166/mcconline/MCC%20Online%20V3/decom_pstn_outstanding.php";
 

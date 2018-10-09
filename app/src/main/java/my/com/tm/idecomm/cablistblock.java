@@ -4,8 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,7 +22,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Total_sites extends AppCompatActivity implements ListView.OnItemClickListener {
+public class cablistblock extends AppCompatActivity  implements ListView.OnItemClickListener{
+
 
     private ProgressDialog loading;
 
@@ -30,15 +31,16 @@ public class Total_sites extends AppCompatActivity implements ListView.OnItemCli
     EditText editext;
     Button btnsearch,back;
 
-;
+    ;
     private String JSON_STRING;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_total_sites);
-
-
         listView = (ListView) findViewById(R.id.list);
 
         listView.setOnItemClickListener(this);
@@ -46,12 +48,10 @@ public class Total_sites extends AppCompatActivity implements ListView.OnItemCli
         back = (Button) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                //startActivity(new Intent(getApplicationContext(),Ipmsansite.class));
+                finish();
             }
         });
-
-
-
 
         getJSON();
 
@@ -62,17 +62,17 @@ public class Total_sites extends AppCompatActivity implements ListView.OnItemCli
         ArrayList<HashMap<String,String>> list = new ArrayList  <HashMap<String, String>>();
         try {
             jsonObject = new JSONObject(JSON_STRING);
-            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_PSTN);
+            JSONArray result = jsonObject.getJSONArray("cablist");
 
             for(int i = 0; i<result.length(); i++){
                 JSONObject jo = result.getJSONObject(i);
-                String a = jo.getString(Config.TAG_SITE);
-                String b = jo.getString(Config.TAG_TOTAL);
+                String a = jo.getString("STATE");
+                String b = jo.getString("total");
 
 
                 HashMap<String,String> employees = new HashMap<>();
-                employees.put(Config.TAG_SITE,a);
-                employees.put(Config.TAG_TOTAL,b);
+                employees.put("STATE",a);
+                employees.put("total",b);
 
 
                 list.add(employees);
@@ -85,7 +85,7 @@ public class Total_sites extends AppCompatActivity implements ListView.OnItemCli
 
         ListAdapter adapter = new SimpleAdapter(
                 getApplicationContext(), list, R.layout.totalpstnsite,
-                new String[]{Config.TAG_SITE,Config.TAG_TOTAL},
+                new String[]{"STATE","total"},
 
                 new int[]{R.id.satu, R.id.dua});
 
@@ -118,7 +118,7 @@ public class Total_sites extends AppCompatActivity implements ListView.OnItemCli
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler3 rh = new RequestHandler3();
-                String s = rh.sendGetRequest(Config.URL_PSTN);
+                String s = rh.sendGetRequest(Config.URL_IPMSANBlocklist);
                 return s;
             }
         }
@@ -132,10 +132,10 @@ public class Total_sites extends AppCompatActivity implements ListView.OnItemCli
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-            Intent intent = new Intent(getApplicationContext(), ListTotalSitesJHR.class);
-            HashMap<String, String> map = (HashMap) parent.getItemAtPosition(position);
-            String empId = map.get(Config.TAG_SITE).toString();
-            intent.putExtra(Config.TAG_JSITE, empId);
+        Intent intent = new Intent(getApplicationContext(), ListTotalBlockPerState.class);
+        HashMap<String, String> map = (HashMap) parent.getItemAtPosition(position);
+        String empId = map.get("STATE").toString();
+        intent.putExtra("STATE", empId);
 
         Context context = getApplicationContext();
         CharSequence text = empId;

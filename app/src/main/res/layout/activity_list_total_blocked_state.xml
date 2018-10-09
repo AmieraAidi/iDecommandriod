@@ -1,0 +1,98 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="start"
+        android:layout_gravity="center"
+        android:layout_weight="1">
+
+        <SearchView
+            android:id="@+id/searchstate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/satu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="STATE"
+                android:textColor="#000000"
+                android:textSize="11.8dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dua"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="CABINET"
+                android:textColor="#000000"
+                android:textSize="11.8dp"
+                android:textStyle="bold" />
+
+            <TextView
+
+                android:id="@+id/tiga"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="STATUS"
+                android:textColor="#000000"
+                android:textSize="11.8dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:background="@drawable/shaped"
+            android:textColor="#ffffff"
+            android:layout_gravity="center"
+            android:text="HOME"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:background="@drawable/shaped"
+            android:textColor="#ffffff"
+            android:layout_gravity="center"
+            android:text="BACK"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</LinearLayout>

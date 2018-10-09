@@ -90,6 +90,9 @@ public class Ipmsansite extends AppCompatActivity implements View.OnClickListene
 //
 //
 
+        totalBlockNis.setOnClickListener(this);
+        totalcabinet.setOnClickListener(this);
+
         rq = Volley.newRequestQueue(getApplicationContext());
         sendrequest1();
 
@@ -147,9 +150,14 @@ public class Ipmsansite extends AppCompatActivity implements View.OnClickListene
 
         if(view == back) {
             finish();
-            //startActivity(new Intent(getApplication(), MainActivity.class));
+          //  startActivity(new Intent(getApplication(), MainActivity.class));
 
 
+        }
+
+        if(view == totalBlockNis) {
+            //finish();
+            startActivity(new Intent(getApplicationContext(), cablistblock.class));
         }
 
     }

@@ -9,13 +9,16 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -99,20 +102,14 @@
             android:label="LIST TOTAL OUTSTANDING" />
         <activity
             android:name=".ListAllOutstading"
-            android:label="LIST ALL OUTSTANDING">
-
-        </activity>
-
+            android:label="LIST ALL OUTSTANDING"></activity>
         <activity
             android:name=".mylistorder"
-            android:label="OUTSTANDING ORDER">
-
-        </activity>
-
+            android:label="OUTSTANDING ORDER"></activity>
         <activity
             android:name=".Ipmsansite"
-            android:screenOrientation="portrait"
-            android:label="IPMSAN">
+            android:label="IPMSAN"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -120,26 +117,25 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="58.27.84.166"
-                    android:pathPrefix="/totalcab" />
+                    android:pathPrefix="/totalcab"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
-
 
         <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
+        <activity android:name=".cablistblock"></activity>
+        <activity android:name=".ListTotalBlockPerState"></activity>
     </application>
-
 
 </manifest>

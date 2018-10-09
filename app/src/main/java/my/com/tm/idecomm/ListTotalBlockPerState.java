@@ -6,14 +6,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filterable;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,60 +24,80 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Total_sites extends AppCompatActivity implements ListView.OnItemClickListener {
+public class ListTotalBlockPerState extends AppCompatActivity  {
 
     private ProgressDialog loading;
 
     private ListView listView;
     EditText editext;
-    Button btnsearch,back;
+    Button btnsearch,home,back;
+    String sitestr;
+    SearchView sv;
 
-;
     private String JSON_STRING;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_total_sites);
+        setContentView(R.layout.activity_list_total_blocked_state);
 
-
+        Intent i = getIntent();
         listView = (ListView) findViewById(R.id.list);
+        sitestr = i.getStringExtra("STATE");
 
-        listView.setOnItemClickListener(this);
+        home = (Button) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent Intent = new Intent(view.getContext(), Ipmsansite.class);
+                view.getContext().startActivity(Intent);}
+        });
 
         back = (Button) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                finish();
+//                startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
-
-
-
-
         getJSON();
-
     }
+
 
     private void showEmployee(){
         JSONObject jsonObject = null;
         ArrayList<HashMap<String,String>> list = new ArrayList  <HashMap<String, String>>();
+        ArrayList<listmodel> listmodelarray = new ArrayList();
         try {
             jsonObject = new JSONObject(JSON_STRING);
-            JSONArray result = jsonObject.getJSONArray(Config.TAG_JSON_PSTN);
+            JSONArray result = jsonObject.getJSONArray("cablistperstate");
 
             for(int i = 0; i<result.length(); i++){
                 JSONObject jo = result.getJSONObject(i);
-                String a = jo.getString(Config.TAG_SITE);
-                String b = jo.getString(Config.TAG_TOTAL);
+                String a = jo.getString("STATE");
+                String b = jo.getString("CABINET");
+                String c = jo.getString("CAB STATUS");
+//                String d = jo.getString(Config.TAG_JEXTYPE);
+//                String e = jo.getString(Config.TAG_JBUILDING);
 
+
+                listmodel objectlist = new listmodel();
+
+                objectlist.setCABINET(b);
+                objectlist.setSTATE(a);
+                objectlist.setSTATUS(c);
 
                 HashMap<String,String> employees = new HashMap<>();
-                employees.put(Config.TAG_SITE,a);
-                employees.put(Config.TAG_TOTAL,b);
+                employees.put("STATE",a);
+                employees.put("CABINET",b);
+                employees.put("CAB STATUS",c);
+//                employees.put(Config.TAG_JEXTYPE,d);
+//                employees.put(Config.TAG_JBUILDING,e);
+
 
 
                 list.add(employees);
+                listmodelarray.add(objectlist);
 
             }
 
@@ -84,12 +106,30 @@ public class Total_sites extends AppCompatActivity implements ListView.OnItemCli
         }
 
         ListAdapter adapter = new SimpleAdapter(
-                getApplicationContext(), list, R.layout.totalpstnsite,
-                new String[]{Config.TAG_SITE,Config.TAG_TOTAL},
+                getApplicationContext(), list, R.layout.activity_total_state,
+                new String[]{"STATE","CABINET","CAB STATUS"},
 
-                new int[]{R.id.satu, R.id.dua});
+                new int[]{R.id.satu, R.id.dua,R.id.tiga});
 
-        listView.setAdapter(adapter);
+        final customelistadaptor1 adaptercustom = new customelistadaptor1(getApplicationContext(),R.layout.activity_total_state,listmodelarray);
+
+        listView.setAdapter(adaptercustom);
+
+
+        sv = (SearchView) findViewById(R.id.searchstate);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                adaptercustom.getFilter().filter(newText);
+                return false;
+            }
+        });
 
     }
 
@@ -118,7 +158,7 @@ public class Total_sites extends AppCompatActivity implements ListView.OnItemCli
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler3 rh = new RequestHandler3();
-                String s = rh.sendGetRequest(Config.URL_PSTN);
+                String s = rh.sendGetRequest(Config.URL_IPMSANBlocklist_perstate+"?STATE="+sitestr);
                 return s;
             }
         }
@@ -127,25 +167,6 @@ public class Total_sites extends AppCompatActivity implements ListView.OnItemCli
     }
 
 
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-            Intent intent = new Intent(getApplicationContext(), ListTotalSitesJHR.class);
-            HashMap<String, String> map = (HashMap) parent.getItemAtPosition(position);
-            String empId = map.get(Config.TAG_SITE).toString();
-            intent.putExtra(Config.TAG_JSITE, empId);
-
-        Context context = getApplicationContext();
-        CharSequence text = empId;
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
-        startActivity(intent);
-    }
 
 
 }
