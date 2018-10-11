@@ -6,11 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +40,7 @@ import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
-public class Ipmsansite extends Fragment implements View.OnClickListener  {
+public class Ipmsansite extends AppCompatActivity implements View.OnClickListener  {
 
     private ListView listView;
     EditText editext;
@@ -63,13 +59,11 @@ public class Ipmsansite extends Fragment implements View.OnClickListener  {
 
 
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.ipmsan);
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            myView = inflater.inflate(R.layout.ipmsan, container, false);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.ipmsan);
+
         // setTheme(Constant.theme);
 
 
@@ -83,12 +77,13 @@ public class Ipmsansite extends Fragment implements View.OnClickListener  {
 //        }
 //
 //        mActionBar.setBackgroundColor(Color.parseColor("#80000000"));
-         ((AppCompatActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.maroon_colorPrimary)));
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.maroon_colorPrimary)));
 
 
-        totalcabinet =(Button) myView.findViewById(R.id.totalcabinetbtn);
+        totalcabinet =(Button) findViewById(R.id.totalcabinetbtn);
 //        completeDecomm =(Button) findViewById(R.id.completeDecommbtn);
-        totalBlockNis =(Button) myView.findViewById(R.id.inprogress);
+        totalBlockNis =(Button) findViewById(R.id.inprogress);
 //        totalApproved =(Button) findViewById(R.id.totalApprovedbtn);
 //        totalCabApproved =(Button) findViewById(R.id.totalCabApprovedbtn);
 //        totalPlinthRecovered =(Button) findViewById(R.id.totalPlinthRecoveredbtn);
@@ -98,10 +93,10 @@ public class Ipmsansite extends Fragment implements View.OnClickListener  {
         totalBlockNis.setOnClickListener(this);
         totalcabinet.setOnClickListener(this);
 
-        rq = Volley.newRequestQueue(getActivity());
+        rq = Volley.newRequestQueue(getApplicationContext());
         sendrequest1();
 
-        return myView;
+
 
     }
 
@@ -153,24 +148,16 @@ public class Ipmsansite extends Fragment implements View.OnClickListener  {
     @Override
     public void onClick(View view) {
 
-        Fragment fragment = null;
         if(view == back) {
-
-            startActivity(new Intent(getActivity(), MainActivity.class));
+            finish();
+          //  startActivity(new Intent(getApplication(), MainActivity.class));
 
 
         }
 
         if(view == totalBlockNis) {
             //finish();
-//            startActivity(new Intent(getActivity(), cablistblock.class));
-            fragment = new cablistblock();
-        }
-
-        if(fragment != null){
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.commit();
+            startActivity(new Intent(getApplicationContext(), cablistblock.class));
         }
 
     }

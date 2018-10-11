@@ -5,12 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ListTotalBlockPerState extends Fragment  implements View.OnClickListener{
+public class ListTotalBlockPerState extends AppCompatActivity  {
 
     private ProgressDialog loading;
 
@@ -36,59 +33,34 @@ public class ListTotalBlockPerState extends Fragment  implements View.OnClickLis
     Button btnsearch,home,back;
     String sitestr;
     SearchView sv;
-    View myView;
-
-    Fragment fragment1 = null;
 
     private String JSON_STRING;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.activity_list_total_blocked_state, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list_total_blocked_state);
 
+        Intent i = getIntent();
+        listView = (ListView) findViewById(R.id.list);
+        sitestr = i.getStringExtra("STATE");
 
-       // Intent i = getIntent();
-        listView = (ListView) myView.findViewById(R.id.list);
+        home = (Button) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent Intent = new Intent(view.getContext(), Ipmsansite.class);
+                view.getContext().startActivity(Intent);}
+        });
 
-
-         sitestr = getArguments().getString("STATE");
-
-       // sitestr = i.getStringExtra("STATE");
-
-
-
-        back = (Button) myView.findViewById(R.id.back);
+        back = (Button) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //startActivity(new Intent(getApplicationContext(),Ipmsansite.class));
-                Fragment fragmentback = new cablistblock();
-
-
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, fragmentback);
-                ft.commit();
+                finish();
+//                startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
-
-
-        home = (Button) myView.findViewById(R.id.home);
-        home.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //startActivity(new Intent(getApplicationContext(),Ipmsansite.class));
-                Fragment fragmentback = new Ipmsansite();
-
-
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, fragmentback);
-                ft.commit();
-            }
-        });
-
-
-
         getJSON();
-
-        return myView;
     }
 
 
@@ -134,17 +106,17 @@ public class ListTotalBlockPerState extends Fragment  implements View.OnClickLis
         }
 
         ListAdapter adapter = new SimpleAdapter(
-                getActivity(), list, R.layout.activity_total_state,
+                getApplicationContext(), list, R.layout.activity_total_state,
                 new String[]{"STATE","CABINET","CAB STATUS"},
 
                 new int[]{R.id.satu, R.id.dua,R.id.tiga});
 
-        final customelistadaptor1 adaptercustom = new customelistadaptor1(getActivity(),R.layout.activity_total_state,listmodelarray);
+        final customelistadaptor1 adaptercustom = new customelistadaptor1(getApplicationContext(),R.layout.activity_total_state,listmodelarray);
 
         listView.setAdapter(adaptercustom);
 
 
-        sv = (SearchView) myView.findViewById(R.id.searchstate);
+        sv = (SearchView) findViewById(R.id.searchstate);
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -195,10 +167,6 @@ public class ListTotalBlockPerState extends Fragment  implements View.OnClickLis
     }
 
 
-    @Override
-    public void onClick(View v) {
 
 
-
-    }
 }
