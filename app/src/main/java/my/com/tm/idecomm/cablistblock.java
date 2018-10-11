@@ -1,16 +1,12 @@
 package my.com.tm.idecomm;
 
-import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class cablistblock extends Fragment implements ListView.OnItemClickListener{
+public class cablistblock extends AppCompatActivity  implements ListView.OnItemClickListener{
 
 
     private ProgressDialog loading;
@@ -35,37 +31,30 @@ public class cablistblock extends Fragment implements ListView.OnItemClickListen
     EditText editext;
     Button btnsearch,back;
 
-    View myView;
+    ;
     private String JSON_STRING;
 
 
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.list_total_sites, container, false);
-
-        listView = (ListView) myView.findViewById(R.id.list);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.list_total_sites);
+        listView = (ListView) findViewById(R.id.list);
 
         listView.setOnItemClickListener(this);
 
-        back = (Button) myView.findViewById(R.id.back);
+        back = (Button) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //startActivity(new Intent(getApplicationContext(),Ipmsansite.class));
-                Fragment fragment = new Ipmsansite();
-
-
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.content_frame, fragment);
-                    ft.commit();
-
+                finish();
             }
         });
 
         getJSON();
 
-        return myView;
     }
 
     private void showEmployee(){
@@ -95,7 +84,7 @@ public class cablistblock extends Fragment implements ListView.OnItemClickListen
         }
 
         ListAdapter adapter = new SimpleAdapter(
-                getActivity(), list, R.layout.totalpstnsite,
+                getApplicationContext(), list, R.layout.totalpstnsite,
                 new String[]{"STATE","total"},
 
                 new int[]{R.id.satu, R.id.dua});
@@ -143,37 +132,19 @@ public class cablistblock extends Fragment implements ListView.OnItemClickListen
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-       Fragment fragment1 = null;
-
+        Intent intent = new Intent(getApplicationContext(), ListTotalBlockPerState.class);
         HashMap<String, String> map = (HashMap) parent.getItemAtPosition(position);
         String empId = map.get("STATE").toString();
+        intent.putExtra("STATE", empId);
 
-
-
-         fragment1 = new ListTotalBlockPerState ();
-
-        Bundle args = new Bundle();
-        args.putString("STATE", empId);
-        fragment1.setArguments(args);
-
-        Context context = getActivity();
+        Context context = getApplicationContext();
         CharSequence text = empId;
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        if(fragment1 != null){
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment1);
-            ft.commit();
-        }
-
-     //   intent.putExtra("STATE", empId);
-
-
-
-
+        startActivity(intent);
     }
 
 
