@@ -78,22 +78,16 @@ public class MainActivity extends AppCompatActivity
                 fragment = new OutstandingPayment();
                 break;
             case R.id.nav_ipmsan:
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                startActivity(new Intent(MainActivity.this, Ipmsansite.class));
-                drawer.closeDrawers();
+                fragment = new Ipmsansite();
                 break;
             case R.id.nav_copper:
-                DrawerLayout drawers = (DrawerLayout) findViewById(R.id.drawer_layout);
-                startActivity(new Intent(MainActivity.this, Ipmsansite.class));
-                drawers.closeDrawers();
-//                fragment = new ScheduleFragment();
+
+                fragment = new Ipmsansite();
                 break;
 
             case R.id.my_order:
-                DrawerLayout drawers2 = (DrawerLayout) findViewById(R.id.drawer_layout);
-                startActivity(new Intent(MainActivity.this, mylistorder.class));
-                drawers2.closeDrawers();
-//                fragment = new ScheduleFragment();
+
+               fragment = new mylistorder();
                 break;
 
             /*     fragment = new Bank();
